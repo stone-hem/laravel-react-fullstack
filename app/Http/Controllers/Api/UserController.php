@@ -28,7 +28,7 @@ class UserController extends Controller
         if (!Auth::attempt($credentials)) {
             return response([
                 'message'=>'email or password incorrect'
-            ]);
+            ],422);
         }
         $user=User::where('email',Auth::user()->email)->first();
         $token=$user->createToken('test')->plainTextToken;

@@ -9,7 +9,7 @@ function Register() {
   const passwordRef=useRef();
   const passwordConfirmationRef=useRef();
 
-  const [errors, setErrors]=useState(null)
+  const [errors,setErrors]=useState(null)
 
   const {setUser, setToken}=useStateContext()
 
@@ -28,29 +28,28 @@ function Register() {
       setToken(data.token)
     })
     .catch(err=>{
-      // console.log(err)
+      console.log(err)
       const response=err.response;
       if (response && response.status===422) {
-        //console.log(response.data.errors)
+        // console.log(response.data.errors)
         setErrors(response.data.errors)
       }
     })
   }
   return (
   
-      <form action="" onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
       <h1 className='title'>
             Register for Free 
           </h1>
           {errors && <div className='alert'>
-            {
-              Object.keys(errors).map(key=>(
-                <p key={key}>{errors[key][0]}</p>
-              ))}
+           {Object.keys(errors).map(key=>(
+            <p key={key}>{errors[key][0]}</p>
+           ))}
           </div>
           }
-        <input ref={nameRef} type="email"  placeholder='email'/>
-        <input ref={emailRef} type="text"  placeholder='full name'/>
+        <input ref={nameRef} type="text"  placeholder='full name'/>
+        <input ref={emailRef} type="email"  placeholder='email'/>
         <input ref={passwordRef} type="password"  placeholder='password'/>
         <input ref={passwordConfirmationRef} type="password"  placeholder='password confirmation'/>
         <button className='btn btn-block'>Register</button>
