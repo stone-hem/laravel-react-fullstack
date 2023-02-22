@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axiosClient from '../axios-client';
 import { useStateContext } from '../contexts/ContextProvider';
@@ -8,6 +8,8 @@ function Register() {
   const emailRef=useRef();
   const passwordRef=useRef();
   const passwordConfirmationRef=useRef();
+
+  const [errors, setErrors]=useState(null)
 
   const {setUser, setToken}=useStateContext()
 
@@ -26,9 +28,11 @@ function Register() {
       setToken(data.token)
     })
     .catch(err=>{
+      // console.log(err)
       const response=err.response;
       if (response && response.status===422) {
-        console.log(response.data.errors)
+        //console.log(response.data.errors)
+        setErrors(response.data.errors)
       }
     })
   }
@@ -38,6 +42,13 @@ function Register() {
       <h1 className='title'>
             Register for Free 
           </h1>
+          {errors && <div className='alert'>
+            {
+              Object.keys(errors).map(key=>(
+                <p key={key}>{errors[key][0]}</p>
+              ))}
+          </div>
+          }
         <input ref={nameRef} type="email"  placeholder='email'/>
         <input ref={emailRef} type="text"  placeholder='full name'/>
         <input ref={passwordRef} type="password"  placeholder='password'/>
