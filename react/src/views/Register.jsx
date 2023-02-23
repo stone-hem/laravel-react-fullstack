@@ -28,7 +28,7 @@ function Register() {
       setToken(data.token)
     })
     .catch(err=>{
-      console.log(err)
+      // console.log(err)
       const response=err.response;
       if (response && response.status===422) {
         // console.log(response.data.errors)
